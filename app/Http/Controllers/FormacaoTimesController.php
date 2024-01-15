@@ -24,6 +24,7 @@ class FormacaoTimesController extends Controller
         return response()->json(['times' => $times], 200);
     }
 
+
     private function dividirJogadoresEmTimes($jogadores, $jogadoresPorTime)
     {
         $times = [];
