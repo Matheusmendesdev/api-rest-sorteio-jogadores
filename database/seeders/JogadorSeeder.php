@@ -13,6 +13,6 @@ class JogadorSeeder extends Seeder
      */
     public function run(): void
     {
-        Jogadores::factory()->count(10)->create();
+        Jogadores::factory()->count(20)->create();
     }
 }

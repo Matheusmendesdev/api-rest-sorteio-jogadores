@@ -1,27 +1,31 @@
 <?php
 
 namespace App\Repository;
+
+use App\DTOs\JogadorCreateDTO;
 use App\DTOs\JogadorDTO;
 use App\Models\Jogadores;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class JogadorRepository
 {
-    public function __construct(protected Jogadores $jogadores){}
-
-    public function getAll(int $total_per_page = 15, int $page = 1, string $filter = ""): LengthAwarePaginator
+    public function __construct(protected Jogadores $jogadores)
     {
-        return $this->jogadores->where(function ($query) use ($filter){
-            if($filter != ""){
+    }
+
+    public function getAll(int $total_per_page = 30, int $page = 1, string $filter = ""): LengthAwarePaginator
+    {
+        return $this->jogadores->where(function ($query) use ($filter) {
+            if ($filter != "") {
                 $query->where('nome', 'LIKE', "%{$filter}%");
             }
         })->paginate($total_per_page, ['*'], 'page', $page);
     }
 
 
-    public function create(JogadorDTO $jogadorDTO): Jogadores
+    public function create(JogadorCreateDTO $jogadorCreateDTO): Jogadores
     {
-        return Jogadores::create((array) $jogadorDTO);
+        return Jogadores::create((array) $jogadorCreateDTO);
     }
 
     public function findById(string $id)
@@ -34,17 +38,17 @@ class JogadorRepository
         if (!$user = $this->findById($jogadorDTO->id)) {
             return false;
         }
-        
+
         $data = (array) $jogadorDTO;
         return $user->update($data);
     }
 
-    public function delete(string $id): bool 
+    public function delete(string $id): bool
     {
         if (!$user = $this->findById($id)) {
             return false;
         }
-        
+
         return $user->delete($id);
     }
 

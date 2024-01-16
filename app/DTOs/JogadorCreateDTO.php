@@ -2,10 +2,9 @@
 
 namespace App\DTOs;
 
-class JogadorDTO
+class JogadorCreateDTO
 {
     public function __construct(
-        readonly public string $id,
         readonly public string $nome,
         readonly public int $nivel,
         readonly public bool $goleiro,
